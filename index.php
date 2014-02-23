@@ -99,8 +99,8 @@ body {
         //You can find the below at http://developer.ean.com/
 
         //Declare your key, secret key and callback URL variables (Without these, the api wont work at all)
-        $consumerKey = "yourkey";
-        $clientSecret = "yoursecret";
+        $consumerKey = "yourconsumerkey";
+        $clientSecret = "yoursecretkey";
         
         //Include the EAN class
         
@@ -117,8 +117,15 @@ body {
         //print_r($discovery); // you may find $discovery['searchResults']['searchResult']['metadata'] interesting if you intend to paginate
         
         //Great, we can now get the top 10 results (because that is the limit we set in discoverHotel above)
-        print_r($discovery['searchResults']['searchResult']['0']['results']);
+        //print_r($discovery['searchResults']['searchResult']['0']['results']);
 
+
+        // great, now lets show conversions between the two of them
+        foreach ($discovery['searchResults']['searchResult']['0']['results']['result'] as $hotelFound) {
+            echo $hotelFound['item']['itemId']['id'].'</br>';
+            echo $ean->ToExpedia($hotelFound['item']['itemId']['id']);
+            echo '<br><br>';
+        }
         flush();
         	echo '</pre>';
         

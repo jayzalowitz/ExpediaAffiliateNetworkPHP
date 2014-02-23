@@ -52,6 +52,20 @@ class EAN {
   return $response;
   }
 
+  function ToExpedia($id) {
+    $apiLocation = 'http://nswaytortlywhomeaterempl:CxHKwMGcMwvVtHPmb5mNqnAY@expedia.cloudant.com/expe_prop/_design/ean/_view/expeean?key='.$id;
 
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+    CURLOPT_RETURNTRANSFER => 1,
+    CURLOPT_URL => $apiLocation,
+    CURLOPT_USERAGENT => $this->useragent
+    ));
+  $response = curl_exec($curl);
+  curl_close($curl);
+  $response = json_decode($response, 1);
+  $response = $response['rows']['0']['value']['id'];
+  return $response;
+  }
 
 }
