@@ -21,5 +21,5 @@ To setup:
 Examples to use from index.php: 
 
         //find a hotel
-//discoverHotel($address = null, $hotelId = null, $affinity = null, $maxResults = '200',$offset = null)
+		//discoverHotel($address = null, $hotelId = null, $affinity = null, $maxResults = '200',$offset = null)
       	$ean->discoverHotel('new york city',null,null,'10',null);
