@@ -99,35 +99,38 @@ body {
         //You can find the below at http://developer.ean.com/
 
         //Declare your key, secret key and callback URL variables (Without these, the api wont work at all)
-        $consumerKey = "yourconsumerkey";
-        $clientSecret = "yoursecretkey";
+        $consumerKey = "consumer";
+        $clientSecret = "secretkey";
         
         //Include the EAN class
-        
         require_once('ean.php');
         
         //And some code!
         $ean = new EAN($consumerKey, $clientSecret);
-  			// make the page all good looking
-  			echo '<br><span style="text-align:left;font-family: Arial, Helvetica, sans-serif; color: black; font-weight: bold; font-size: 20px;">';
-  			echo '<pre>';
+        // make the page all good looking
+        echo '<br><span style="text-align:left;font-family: Arial, Helvetica, sans-serif; color: black; font-weight: bold; font-size: 20px;">';
+        echo '<pre>';
         //lets find a hotel using the discover Hotel api
         $discovery = json_decode($ean->discoverHotel('new york city',null,null,'10',null),1);
         // want to see the entire result, print_r it
         //print_r($discovery); // you may find $discovery['searchResults']['searchResult']['metadata'] interesting if you intend to paginate
         
+        $results= $discovery['searchResults']['searchResult']['0']['results']['result'];
+
         //Great, we can now get the top 10 results (because that is the limit we set in discoverHotel above)
-        //print_r($discovery['searchResults']['searchResult']['0']['results']);
+        echo "<h1>Top 10 Results</h1>";
+        print_r($results);
 
 
         // great, now lets show conversions between the two of them
-        foreach ($discovery['searchResults']['searchResult']['0']['results']['result'] as $hotelFound) {
+        echo "<h2>Id conversions</h2>";
+        foreach ($results as $hotelFound) {
             echo $hotelFound['item']['itemId']['id'].'</br>';
             echo $ean->ToExpedia($hotelFound['item']['itemId']['id']);
             echo '<br><br>';
         }
         flush();
-        	echo '</pre>';
+          echo '</pre>';
         
         ?>
     
